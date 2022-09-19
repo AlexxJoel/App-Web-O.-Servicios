@@ -1,5 +1,10 @@
 package client;
 
+import org.apache.xmlrpc.client.XmlRpcClient;
+import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Scanner;
 
 public class ClientRCP {
@@ -8,12 +13,7 @@ public class ClientRCP {
     static Scanner in = new Scanner(System.in); //No pierde su valor durante toda la ejecucion
 
 
-    public static void main(String[] args) {
-        XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
-        config.setServerURL(new URL("http://localhost:1200"));
-        XmlRpcClient client = new XmlRpcClient();
-        client.setConfig(config);
-
+    public static void main(String[] args) throws MalformedURLException {
         XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
         config.setServerURL(new URL("http://localhost:1200"));
         XmlRpcClient client = new XmlRpcClient();
@@ -31,24 +31,38 @@ public class ClientRCP {
             System.out.println("6.Raiz");
             System.out.println("7.Consultar historial");
             System.out.println("8.Salir");
-            option= in.next();
-            if (isNumber(option)) {
-                switch (Integer.parseInt(option)){
-                    case 1:
+            System.out.print("Ingresa opción: ");
+            do {
+                option= in.next();
+                if (isNumber(option) ){
+                    if ( !(Integer.parseInt(option) == 7)) {
                         do {
-                            System.out.println("Ingrese el primer numero");
+                            System.out.println("Ingrese el numero");
                             firstNumber = in.next();
 
                             if (!isDouble(firstNumber))
-                                System.out.println("Ingrese el numero valido");
+                                System.err.println("Ingrese el numero valido");
                         }while (!isDouble(firstNumber));
 
-                        do {
-                            System.out.println("Ingrese el segundo numero");
-                            secondNumber = in.next();
-                            if (!isDouble(secondNumber))
-                                System.out.println("Ingrese el numero valido");
-                        }while (!isDouble(secondNumber));
+                        if ( !(Integer.parseInt(option) == 6) ) {
+                            do {
+                                System.out.println("Ingrese el segundo numero");
+                                secondNumber = in.next();
+                                if (!isDouble(secondNumber))
+                                    System.err.println("Ingrese el numero valido");
+                            }while (!isDouble(secondNumber));
+                        }
+                    }
+                }else {
+                    System.err.println("Dato incorrecto");;
+                }
+            }while (!isNumber(option));
+
+
+
+            if (isNumber(option)) {
+                switch (Integer.parseInt(option)){
+                    case 1:
                         //Ejecución del método en el servidor........
 
                         break;
