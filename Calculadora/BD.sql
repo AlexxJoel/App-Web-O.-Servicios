@@ -32,7 +32,7 @@ CREATE TABLE `operations` (
   `result` double NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,6 @@ CREATE TABLE `operations` (
 
 LOCK TABLES `operations` WRITE;
 /*!40000 ALTER TABLE `operations` DISABLE KEYS */;
-INSERT INTO `operations` VALUES (1,'suma',5,5,10,'2022-09-20 00:15:34'),(2,'resta',5,4,1,'2022-09-20 00:16:31'),(3,'resta',4,4,0,'2022-09-20 00:18:08'),(4,'Suma',2,2,4,'2022-09-20 00:35:52'),(5,'Suma',5,5,10,'2022-09-20 00:37:18'),(6,'Suma',3,3,6,'2022-09-20 00:40:55'),(7,'Resta',5,5,0,'2022-09-20 00:42:03'),(8,'Raíz cuadrada',4,0,2,'2022-09-20 00:42:12');
 /*!40000 ALTER TABLE `operations` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-20  1:01:54
+-- Dump completed on 2022-09-20  1:54:34

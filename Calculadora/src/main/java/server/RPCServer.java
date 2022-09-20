@@ -9,12 +9,10 @@ import java.io.IOException;
 public class RPCServer {
     public static void main(String[] args) throws XmlRpcException, IOException {
 
-        //HERRERA HERNANDEZ JOEL ALEJANDRO 4A
-
-        System.out.println("Initializing server... /Inicializando servidor...");
+        System.out.println("Initializing server...");
 
         PropertyHandlerMapping mapping = new PropertyHandlerMapping();
-        mapping.addHandler("Methods", Methods.class);
+        mapping.addHandler("Operations", Operations.class);
 
         WebServer server = new WebServer(1200);
         server.getXmlRpcServer().setHandlerMapping(mapping);
