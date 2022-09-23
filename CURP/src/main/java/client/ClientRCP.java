@@ -77,7 +77,7 @@ public class ClientRCP {
                 data.add(curp);
 
                 for (Object da: data) {
-                    System.out.println(da);
+                    System.out.println( "DATE SENT ->" + da);
                 }
 
 
@@ -127,7 +127,7 @@ public class ClientRCP {
     }
 
 
-    
+
 /*
 
 

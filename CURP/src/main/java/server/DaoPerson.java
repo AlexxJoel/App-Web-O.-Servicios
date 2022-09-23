@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DaoPerson {
 
@@ -15,7 +17,7 @@ public class DaoPerson {
 
     private final  String CREATE_CURP= "INSERT INTO `person`.`curp`(`name`,` first_surname`,`second_surname`,`sex`,`place_born`,`date_born`,`curp`)VALUES(?,?,?,?,?,?,?)";
 
-    private final  String LIST_PERSON_CURP =  "";
+    private final  String LIST_PERSON_CURP =  "SELECT * FROM person.curp;";
 
     public boolean saveCurp(String name, String  first_surname, String second_surname, String sex, String place_born, String date_born,String curp){
         try {
@@ -38,24 +40,16 @@ public class DaoPerson {
         return false;
     }
 
-    public static void main(String[] args) {
-      boolean f =   new DaoPerson().saveCurp("Joel","Herrera","Hernandez","H","Morelos","2003-11-09","HHJ031109HMRRE_A2");
-
-        System.out.println(f);
-    }
-
-    /*
-
-    public  List<String> listOperations (){
+    public List<String> listCurp (){
         List<String> Mylist = new LinkedList<>();
         String text = "";
         try{
-
-            preparedStatement = conexion.prepareStatement(LIST_OPERATIONS);
+            conexion = new MySQLConnection().getConnection();
+            preparedStatement = conexion.prepareStatement(LIST_PERSON_CURP);
             result = preparedStatement.executeQuery();
             while (result.next()) {
 
-                text = ""+result.getString("type") + " : " + result.getDouble("first_number") + ", " + result.getDouble("second_number") + " -> " + result.getDouble("result");
+                text =  "->(" + result.getString("curp")+ ") " + result.getString("name") + " : " + result.getString("first_surname") + ", " + result.getString("second_surname") + " , " + result.getString("sex")  + " , " + result.getString("place_born")  + " , " + result.getString("data_born");
                 Mylist.add(text);
             }
 
@@ -69,6 +63,20 @@ public class DaoPerson {
 
         return Mylist;
     }
+
+    public static void main(String[] args) {
+      /*boolean f =   new DaoPerson().saveCurp("Joel","Herrera","Hernandez","H","Morelos","2003-11-09","HHJ031109HMRRE_A2");
+
+        System.out.println(f);
+
+       */
+
+        new DaoPerson().listCurp();
+    }
+
+    /*
+
+
 
      */
 
