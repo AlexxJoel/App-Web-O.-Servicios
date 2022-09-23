@@ -7,10 +7,10 @@ public class Methods {
     DaoPerson daoPerson = new DaoPerson();
 
 
-    public boolean savePerson(){
-
-
-
+    public boolean savePerson(String name,String firtSurname, String secondSurname, String sex, String  placeBorn, String dateBorn,  String curp){
+        if (daoPerson.saveCurp(name, firtSurname, secondSurname, sex, placeBorn, dateBorn, curp)){
+            return true;
+        }
         return false;
     }
 

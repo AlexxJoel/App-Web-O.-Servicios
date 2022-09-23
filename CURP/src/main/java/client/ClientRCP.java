@@ -25,53 +25,78 @@ public class ClientRCP {
 
         //---------------------------------Variables---------------
         int opc = 0;
-        String name, firtSurname, secondSurname, sex, placeBorn, dateBorn;
+        String name, firtSurname, secondSurname, sex, placeBorn, dateBorn, curp="A", text = "";
 
         //------------------------------------------------------
 
         System.out.println("----------------Bienvenido-------------------------------");
-        System.out.println("¿Qué acción deseéas realizar?");
-        System.out.println("1. Creación de CURP, 2. Buscar un CURP");
-        System.out.print("Seleccione un numero  -> ");
-        opc = in.nextInt();
+        do {
+            System.out.println("¿Qué acción deseéas realizar?");
+            System.out.println("1. Creación de CURP, 2. Buscar un CURP 3.Salir");
+            System.out.print("Seleccione un numero  -> ");
+            opc = in.nextInt();
 
-        if (opc == 1) {
-            System.out.println("---------------------------------------------Creación-------------------------------");
-            System.out.println("Ingrese su nombre");
+            if (opc == 1) {
+                System.out.println("---------------------------------------------Creación-------------------------------");
+                System.out.println("Ingrese su nombre");
 
-            name = in.next().toUpperCase();
-            String[] firstName = name.split(" "); //divide to space
-            System.out.println(firstName[0]);
-            System.out.println(firstName[0].charAt(0)); //First name´s letter
+                name = in.next().toUpperCase();
+                data.add(name); // ADD THE ARGUMENTS TO SENT FUNCTION
+                String[] firstName = name.split(" "); //divide to space
+                System.out.println(firstName[0]);
+                System.out.println(firstName[0].charAt(0)); //First name´s letter
 
-            System.out.println("Ingrese su primer apellido");
-            firtSurname = in.next();
+                System.out.println("Ingrese su primer apellido");
+                firtSurname = in.next();
+                data.add(firtSurname);// ADD THE ARGUMENTS TO SENT FUNCTION
 
-            System.out.println("Ingrese su segundo apellido ");
-            secondSurname = in.next();
+                System.out.println("Ingrese su segundo apellido ");
+                secondSurname = in.next();
+                data.add(secondSurname);// ADD THE ARGUMENTS TO SENT FUNCTION
 
-            System.out.println("Ingrese su sexo  Mujer/Hombre ");
-            sex = in.next().toUpperCase();
-            System.out.println(sex.charAt(0));
+                System.out.println("Ingrese su sexo  Mujer/Hombre ");
+                sex = in.next().toUpperCase();
+                sex = String.valueOf(sex.charAt(0));
+                data.add(sex);// ADD THE ARGUMENTS TO SENT FUNCTION
 
-            System.out.println("Ingrese su estado de nacimiento");
-            placeBorn = in.next();
+                System.out.println(sex);
+
+                System.out.println("Ingrese su estado de nacimiento");
+                placeBorn = in.next();
+                data.add(placeBorn.toUpperCase());// ADD THE ARGUMENTS TO SENT FUNCTION
+                String letter = consonat(placeBorn);
+                System.out.println(letter);
+
+                System.out.println("---------Respetando el guión medio----------------");
+                System.out.println("Ingrese fecha de nacimento en esta estructura YYYY-MM-DD");
+                dateBorn = in.next();
+                data.add(dateBorn);
+                System.out.println(dateCurp(dateBorn));
 
 
+                data.add(curp);
 
-            System.out.println("---------Respetando el guión medio----------------");
-            System.out.println("Ingrese fecha de nacimento en esta estructura YYYY-MM-DD");
+                for (Object da: data) {
+                    System.out.println(da);
+                }
 
-        } else if (opc == 2) {
 
-            System.out.println("Ingrese CURP a buscar ");
+                Boolean response = (Boolean) client.execute("Methods.savePerson", data); //SENT TO BUILD UP THE REGISTRE
+                text = response?"¡Registro exitoso!":"!!UPSS ocurrió algun problema ";
+                System.out.println(text);
 
-            System.out.println("Resultado ----> ");
+            } else if (opc == 2) {
+                data.add(0);
+                System.out.println("Ingrese CURP a buscar ");
+                curp = in.next();
 
-        } else {
-            System.err.println("!!UPSS Opción no valida");
-        }
+                text = (String) client.execute("Methods.searchPerson", data); //SENT TO SEE A SPECIFIC CURP/INFO PERSON
+                System.out.println("Resultado ----> " + text);
 
+            } else if (opc == 3) { System.err.println("!!Adiós");
+            }else  System.err.println("!!UPSS Opción no valida");
+
+        }while (opc!=3);
 
     }
 
@@ -81,117 +106,30 @@ public class ClientRCP {
         char[] statesL = state.toCharArray();
         String combination="";
         for (char letter: statesL ) {
-            if (combination.length() < 3){
+            if (combination.length() < 2){
                 if (!(letter == 'A' || letter == 'E' || letter == 'I' || letter == 'O' || letter == 'U' )   ){
                     combination += letter;
                 }
             }
 
         }
-        return combination;
+
+        return combination.trim();
+    }
+
+    public static String dateCurp(String date){
+        if(date.contains("-")){
+            String[] part = date.split("-");
+            return part[0].substring(2,4) + part[1] + part[2];
+        }else{
+            return "";
+        }
     }
 
 
-
-
-
-
-
-
+    
 /*
-        String option = "", firstNumber = "", secondNumber= "", text="";
-        Double response = 0D ;
 
-        do {//main menu
-            System.out.println("1.Suma, 2.Resta, 3.Multiplicación");  //Option
-            System.out.println("4.Division, 5.Exponente, 6.Raiz");
-            System.out.println("7.Consultar historial");
-            System.out.println("8.Salir");
-            do { //Check the variable option if it's a number
-                System.out.print("Ingresa opción: ");
-                option= in.next();
-                if (isNumber(option) ){  //Check how many number we'll need
-                    if (Integer.parseInt(option)<8 && Integer.parseInt(option)>0){
-
-                        if ( !(Integer.parseInt(option) == 7) ) { //in the case 7 don't need any number
-
-                            firstNumber = firsNumber();
-                            root[0] = Double.parseDouble(firstNumber); //add to array to sent a server
-
-
-                            if (!(Integer.parseInt(option) == 6)) { //in the case 6 just need a number
-                                secondNumber = secondNumber(option);
-                                data[0] = root[0];
-                                data[1] = Double.parseDouble(secondNumber); //add to array to sent a server
-
-                            }
-                        }
-
-                    }
-                }else {
-                    System.out.println("-----\n Dato incorrecto \n----------");
-                }
-            }while (!isNumber(option));
-
-            if (isNumber(option)) {
-                switch (Integer.parseInt(option)){
-                    case 1:
-                        response = (Double) client.execute("Methods.addition", data);
-                        text = "suma";
-                        break;
-                    case 2:
-                        response = (Double) client.execute("Methods.sustraction", data);
-                        text = "resta";
-                        break;
-                    case 3:
-                        response = (Double) client.execute("Methods.multiplication", data);
-                        text = "multiplicación";
-                        break;
-                    case 4:
-                        if (secondNumber.equals("0")){
-                            System.out.println("No se puede dividir entre 0");
-                            secondNumber = secondNumber(option);
-                            data[1]= Double.parseDouble(secondNumber) ; //add to array to sent a server
-
-                        }
-                        response = (Double) client.execute("Methods.division", data);
-                        text = "división";
-                        break;
-                    case 5:
-                        response = (Double) client.execute("Methods.exponet", data);
-                        text = "exponente";
-                        break;
-                    case 6:
-                        if (firstNumber.contains("-")){
-                            System.out.println("No se puede numeros negativos en raices");
-                            firstNumber = firsNumber();
-                            root[0]= Double.parseDouble(firstNumber) ; //add to array to sent a server
-
-                        }
-                        response = (Double) client.execute("Methods.root", root);
-                        text = "raiz";
-                        break;
-                    case 7:
-                        String h = (String) client.execute("Methods.history" , root);
-                        System.out.println(h);
-                        break;
-
-                    case 8:
-                        System.out.println("------------\n Adios \n---------------");
-                        break;
-
-                    default:
-                        System.out.println("No existe esa opción");
-                }
-
-                if(Integer.parseInt(option)<7 && Integer.parseInt(option)>0)
-                    System.out.println("-------- \n El resultado de la " + text + " es : " +response +"\n---------");
-            }else {
-                System.out.println("La opcion es incorrecta Intente nuevemente");
-            }
-        }while (!option.equals("8") );
-
-    }
 
     public static boolean isNumber(String number) {
         try {
