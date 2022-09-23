@@ -56,7 +56,7 @@ public class ClientRCP {
 
             System.out.println("Ingrese su estado de nacimiento");
             placeBorn = in.next();
-            
+
 
 
             System.out.println("---------Respetando el guión medio----------------");
