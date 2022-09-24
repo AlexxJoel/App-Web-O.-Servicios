@@ -16,15 +16,20 @@ public class Methods {
 
 
 
-    /*
-    public String history(double num1 ){
+    public String searchPerson(String curp){
+        System.out.println(curp);
+        return curp = daoPerson.personCurp(curp);
+    }
+
+
+    public String history(){
         String text="";
-        List<String> list = daoHistory.listOperations();
+        List<String> list = daoPerson.listCurp();
         for (String s:list) {
             text += s + "\n";
         }
         return text;
     }
 
-     */
+
 }

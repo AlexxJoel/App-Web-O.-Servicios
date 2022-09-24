@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class ClientRCP {
 
 
-    static Scanner in = new Scanner(System.in); //Does not lose its value throughout the execution
+    static Scanner in = new Scanner(System.in).useDelimiter("\n"); //Does not lose its value throughout the execution
 
     public static void main(String[] args) throws MalformedURLException, XmlRpcException {
         XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
@@ -21,7 +21,8 @@ public class ClientRCP {
         XmlRpcClient client = new XmlRpcClient();
         client.setConfig(config);
         List<Object> data = new ArrayList<>();
-        in.useDelimiter("\n");
+        Object[] dataNull = {};
+
 
         //---------------------------------Variables---------------
         int opc = 0;
@@ -32,19 +33,20 @@ public class ClientRCP {
         System.out.println("----------------Bienvenido-------------------------------");
         do {
             System.out.println("¿Qué acción deseéas realizar?");
-            System.out.println("1. Creación de CURP, 2. Buscar un CURP 3.Salir");
+            System.out.println("1. Creación de CURP, 2. Buscar un CURP, 3-Ver todos los CURP 4.Salir");
             System.out.print("Seleccione un numero  -> ");
-            opc = in.nextInt();
+          
+                opc = in.nextInt();
+
 
             if (opc == 1) {
                 System.out.println("---------------------------------------------Creación-------------------------------");
                 System.out.println("Ingrese su nombre");
-
                 name = in.next().toUpperCase();
                 data.add(name); // ADD THE ARGUMENTS TO SENT FUNCTION
                 String[] firstName = name.split(" "); //divide to space
-                System.out.println(firstName[0]);
-                System.out.println(firstName[0].charAt(0)); //First name´s letter
+               // System.out.println(firstName[0]);
+                //name = String.valueOf(firstName[0].charAt(0)); //First name´s letter
 
                 System.out.println("Ingrese su primer apellido");
                 firtSurname = in.next();
@@ -59,7 +61,7 @@ public class ClientRCP {
                 sex = String.valueOf(sex.charAt(0));
                 data.add(sex);// ADD THE ARGUMENTS TO SENT FUNCTION
 
-                System.out.println(sex);
+               // System.out.println(sex);
 
                 System.out.println("Ingrese su estado de nacimiento");
                 placeBorn = in.next();
@@ -74,7 +76,9 @@ public class ClientRCP {
                 System.out.println(dateCurp(dateBorn));
 
 
-                data.add(curp);
+                curp = String.valueOf(firstName[0].charAt(0)) + String.valueOf(firtSurname.charAt(0)) + String.valueOf(secondSurname.charAt(0))+ dateCurp(dateBorn) + consonat(placeBorn) + String.valueOf( firtSurname.charAt(3)) + String.valueOf(secondSurname.charAt(3)) +  String.valueOf(firstName[0].charAt(3)) + generatosAlfaNumeric();
+
+                data.add(curp.toUpperCase());
 
                 for (Object da: data) {
                     System.out.println( "DATE SENT ->" + da);
@@ -83,20 +87,29 @@ public class ClientRCP {
 
                 Boolean response = (Boolean) client.execute("Methods.savePerson", data); //SENT TO BUILD UP THE REGISTRE
                 text = response?"¡Registro exitoso!":"!!UPSS ocurrió algun problema ";
-                System.out.println(text);
+                System.out.println("-----------\n"+text+"\n-----------------------");
 
             } else if (opc == 2) {
-                data.add(0);
+                data.clear();
                 System.out.println("Ingrese CURP a buscar ");
                 curp = in.next();
+                data.add(curp);
 
                 text = (String) client.execute("Methods.searchPerson", data); //SENT TO SEE A SPECIFIC CURP/INFO PERSON
-                System.out.println("Resultado ----> " + text);
+                System.out.println("-----\n Resultado ----> " + text + "\n ---------");
 
-            } else if (opc == 3) { System.err.println("!!Adiós");
+
+            } else if (opc==3) {
+                System.out.println("Todos los registros");
+                text = (String) client.execute("Methods.history", dataNull); //SENT TO SEE A SPECIFIC CURP/INFO PERSON
+                System.out.println(" \n Resultado ----> " + text);
+
+
+
+            } else if (opc == 4) { System.err.println("!!Adiós");
             }else  System.err.println("!!UPSS Opción no valida");
 
-        }while (opc!=3);
+        }while (opc!=4);
 
     }
 
@@ -126,19 +139,25 @@ public class ClientRCP {
         }
     }
 
+    public static String generatosAlfaNumeric(){
+        String palabra = "";
+        int letra = (int)(Math.random()*9);
+        System.out.println(letra);
+
+        int codigoAscii = (int)Math.floor(Math.random()*(122 - 97)+97);
+        palabra = palabra + (char)codigoAscii;
+        palabra = letra + palabra.toUpperCase();
+        System.out.println(palabra);
+        return palabra;
+    }
+
+
+
 
 
 /*
 
 
-    public static boolean isNumber(String number) {
-        try {
-            Integer.parseInt(number);
-            return true;
-        }catch (NumberFormatException e){
-            return false;
-        }
-    }
 
 
     //validar que sea double
