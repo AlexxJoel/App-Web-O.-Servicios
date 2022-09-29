@@ -1,0 +1,5 @@
+utez\ServiceService.class
+org\example\SOAPClient\ServiceService.class
+client.class
+org\example\SOAPClient\Service.class
+utez\Service.class
