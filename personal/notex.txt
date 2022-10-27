@@ -1,0 +1,6 @@
+npm init
+
+
+ "dev" : "nodemon src/index.js" // Inicializar 
+
+ node modules  no subir 
