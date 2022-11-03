@@ -1,32 +1,27 @@
-//importacion de librearias y/o componentes
-const express = require("express");
-const cors = require("cors");
-require("dotenv").config();
+const express = require('express');
+
+require('dotenv').config(); //Imports
+
+const cors = require('cors');
+const {personalRouter} = require('../modules/controler/routes');
+
+const app = express(); //Instanciar servers
+app.set('port', process.env.PORT || 3000)
 
 
-//Inicializacion de server
-const app = express();
+//middlewares
+app.use(cors({origin: '*'})); //Permite recibir cualquierpeticion con x orignes
+app.use(express.json({limit: '50mb'})); // Permite peticiones de hasta 50mb
 
-app.set('port',process.env.PORT || 3000) //Utilizar puerto     
-//middle ware 
-//Utilizacion de middlewares
-app.use(
-    cors({origins: "*"})
-);//permite recibir peticiones desde cualquier aplicacion
-
-//Limite del tamaño de datos en peticiones
-app.use(express.json({limit:"50mb"}));//se limita el peso de las peticiones
 //Routes
-//Definicion de todas mis rutas
-app.get("/", (request,response) =>{
-    response.send("Bienvenido a la aplicacion utez");
-});//este metodo va a recibir dos parametros la ruta y un metodo 
-//end points 
-//address -> localhost:3000 -> primer endpoint 
-//Exportacion de nuestro modulo y/o variables
-//variable global module
+app.get('/',( request, response) => {
+    response.send('bienvenido a la AppRest Personal-UTEZ')
+}); //Endpoints
+
+// http://localhost:3000/ => Primer Endpoint
+app.use(`/api/personal`, personalRouter);
+//app.use(`/api/position`,positionRouter);
+//app.use(`/api/user`, useRouter);
 module.exports = {
     app
-}
-
-
+}; // es el equivalente a {app:app}

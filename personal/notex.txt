@@ -3,4 +3,7 @@ npm init
 
  "dev" : "nodemon src/index.js" // Inicializar 
 
+
+ npm run dev 
+ 
  node modules  no subir 
