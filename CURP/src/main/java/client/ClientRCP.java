@@ -35,7 +35,7 @@ public class ClientRCP {
             System.out.println("¿Qué acción deseéas realizar?");
             System.out.println("1. Creación de CURP, 2. Buscar un CURP, 3-Ver todos los CURP 4.Salir");
             System.out.print("Seleccione un numero  -> ");
-          
+
                 opc = in.nextInt();
 
 
