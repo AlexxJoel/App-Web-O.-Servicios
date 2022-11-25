@@ -1,4 +1,4 @@
-c1100onst express = require("express");
+const express = require("express");
 require("dotenv").config(); //imports
 const cors = require("cors");
 const {personalRouter} = require('../modules/controller/routes');
