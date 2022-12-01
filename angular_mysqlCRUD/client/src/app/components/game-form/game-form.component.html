@@ -1,1 +1,30 @@
-<p>game-form works!</p>
+<div class="col-md-4 offset-md-2">
+  <div class="card">
+    <div class="card-body">
+      <form>
+        <div class="form-group">
+          <input [(ngModel)]="game.title" type="text" name="title" placeholder="Title" class="form-control" autofocus>
+        </div>
+        <div class="form-group  my-4">
+          <textarea [(ngModel)]="game.description"   name="description" placeholder="Description" rows="2" class="form-control" ></textarea>
+        </div>
+        <div class="form-group mb-4">
+          <input [(ngModel)]="game.image"  type="url" name="image" placeholder="Image" class="form-control" >
+        </div>
+
+        <div class=" d-flex justify-content-center">
+          <button class="btn btn-success  vw-100" (click)="edit?updateGame():saveNewGame()">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="card card-body text-center">
+    <img [src]="game.image == '' ? '/assets/noImage.jpeg' : game.image" alt="Image" class="card-img-top" height="300px">
+    <h3>{{game.id}}. {{game.title}}</h3>
+    <p>{{game.description}}</p>
+    <p>{{game.created_at | date: 'yyyy-MM-dd' }}</p>
+  </div>
+</div>
