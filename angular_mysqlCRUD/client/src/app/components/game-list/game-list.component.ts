@@ -10,6 +10,7 @@ export class GameListComponent implements OnInit{
   @HostBinding('class') classes = 'row'
 
   games: any = [];
+  displayedColumns: any;
 
   constructor(private gameService:GamesService) {
   }
